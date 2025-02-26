@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-brightness": ["./src/index"]
+      "react-native-brightness-control": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

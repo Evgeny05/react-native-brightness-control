@@ -5,13 +5,12 @@ import React
 
 @objc(Brightness)
 class Brightness: NSObject {
-  private var savedBrightness: CGFloat?
+  private var savedBrightness = UIScreen.main.brightness
   private var isNeedRestoreBrightness = true
   
   override init() {
     super.init()
     
-    savedBrightness = UIScreen.main.brightness
     NotificationCenter.default.addObserver(self, selector: #selector(applicationWillResignActive(_:)), name: UIApplication.willResignActiveNotification, object: nil)
     
   }
@@ -51,9 +50,9 @@ class Brightness: NSObject {
   }
   
   @objc func applicationWillResignActive(_ notification: Notification) {
-    if isNeedRestoreBrightness, let savedBrightness = savedBrightness {
+    if isNeedRestoreBrightness {
       DispatchQueue.main.async {
-        UIScreen.main.brightness = savedBrightness
+        UIScreen.main.brightness = self.savedBrightness
       }
     }
     
