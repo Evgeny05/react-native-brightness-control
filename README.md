@@ -1,6 +1,7 @@
 # 🔅 react-native-brightness-control
 
 Native module for RN that allows you to control screen brightness
+
 ![npm](https://img.shields.io/npm/v/react-native-brightness-controller)
 
 ## Installation
