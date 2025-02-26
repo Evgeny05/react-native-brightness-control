@@ -1,7 +1,7 @@
 {
   "name": "react-native-brightness-control",
-  "version": "0.1.0",
-  "description": "q",
+  "version": "1.0.0",
+  "description": "Adjust screen brightness",
   "source": "./src/index.ts",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -48,11 +48,15 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "screen-brightness",
+    "device-brightness",
+    "control-brightness",
+    "brightness"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Evgeny05/react-native-brightness-control.git"
+    "url": "https://github.com/Evgeny05/react-native-brightness-control.git"
   },
   "author": "Evgeny05 <dubil.zh@yandex.ru> (https://github.com/Evgeny05)",
   "license": "MIT",
