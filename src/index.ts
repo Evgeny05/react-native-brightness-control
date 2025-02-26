@@ -35,9 +35,13 @@ const setIsNeedRestoreBrightness = (isNeedRestoreBrightness: boolean) => {
 
 const Brightness = {
   /**
+   * Sets the screen brightness
    * Value must be between 0 to 1
    */
   setBrightness,
+  /**
+   * Gets the current screen brightness
+   */
   getBrightness,
   /**
    * The method is responsible for determining whether the user's original brightness
