@@ -1,8 +1,8 @@
 {
-  "name": "react-native-brightness",
+  "name": "react-native-brightness-control",
   "version": "0.1.0",
   "description": "q",
-  "source": "./src/index.tsx",
+  "source": "./src/index.ts",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "exports": {

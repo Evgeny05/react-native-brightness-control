@@ -1,17 +1,20 @@
-import { multiply } from 'react-native-brightness';
-import { Text, View, StyleSheet } from 'react-native';
-import { useState, useEffect } from 'react';
+import { View, StyleSheet, Button } from 'react-native';
+import { useEffect } from 'react';
+import Brightness from 'react-native-brightness';
 
 export default function App() {
-  const [result, setResult] = useState<number | undefined>();
-
   useEffect(() => {
-    multiply(3, 7).then(setResult);
+    (async () => {
+      await Brightness.getBrightness();
+    })();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Button
+        title="press"
+        onPress={() => Brightness.setBrightness(0.1, 3000)}
+      />
     </View>
   );
 }

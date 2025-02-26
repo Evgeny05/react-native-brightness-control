@@ -1,25 +1,50 @@
 package com.brightness
 
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
+import android.provider.Settings
+import com.facebook.react.bridge.*
+import android.animation.ValueAnimator
 
-class BrightnessModule(reactContext: ReactApplicationContext) :
-  ReactContextBaseJavaModule(reactContext) {
+class BrightnessModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+    override fun getName(): String {
+        return "Brightness"
+    }
 
-  override fun getName(): String {
-    return NAME
-  }
+    @ReactMethod
+    fun setBrightness(brightness: Float, duration: Int = 0) {
+        val activity = currentActivity ?: return
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-  @ReactMethod
-  fun multiply(a: Double, b: Double, promise: Promise) {
-    promise.resolve(a * b)
-  }
+        activity.runOnUiThread {
+            val layoutParams = activity.window.attributes
 
-  companion object {
-    const val NAME = "Brightness"
-  }
+            if (duration == 0) {
+                layoutParams.screenBrightness = brightness
+                activity.window.attributes = layoutParams
+                return@runOnUiThread
+            }
+
+            val startBrightness = getBrightness()
+
+            ValueAnimator.ofFloat(startBrightness, brightness).apply {
+                this.duration = duration.toLong()
+                addUpdateListener { animator ->
+                    layoutParams.screenBrightness = (animator.animatedValue as Float).coerceIn(0f, 1f)
+                    activity.window.attributes = layoutParams
+                }
+                start()
+            }
+        }
+    }
+
+    @ReactMethod
+    fun getBrightness(): Float {
+        val activity = currentActivity ?: return 0.5f
+        val layoutParams = activity.window.attributes
+
+        return if (layoutParams.screenBrightness >= 0) {
+            layoutParams.screenBrightness
+        } else {
+            val resolver = reactApplicationContext.contentResolver
+            Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS) / 255f
+        }
+    }
 }
