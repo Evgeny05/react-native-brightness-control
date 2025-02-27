@@ -1,6 +1,6 @@
 {
   "name": "react-native-brightness-control",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adjust screen brightness",
   "source": "./src/index.ts",
   "main": "./lib/commonjs/index.js",
