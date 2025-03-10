@@ -16,16 +16,19 @@ const BrightnessModule = NativeModules.Brightness
       }
     );
 
-const setBrightness = async (brightness: number, duration: number = 0) => {
+const setBrightness = async (brightness: number, durationMs: number = 0) => {
   if (brightness < 0 || brightness > 1 || brightness === undefined) {
-    console.error('brightness value must be between 0 to 1');
+    console.error(
+      `Invalid brightness value: ${brightness}. It must be between 0 and 1`
+    );
     return;
   }
 
-  await BrightnessModule.setBrightness(brightness, duration);
+  await BrightnessModule.setBrightness(brightness, durationMs);
 };
 
-const getBrightness = async () => BrightnessModule.getBrightness();
+const getBrightness = async (): Promise<number> =>
+  BrightnessModule.getBrightness();
 
 const setIsNeedRestoreBrightness = (isNeedRestoreBrightness: boolean) => {
   if (Platform.OS === 'ios') {
@@ -35,19 +38,21 @@ const setIsNeedRestoreBrightness = (isNeedRestoreBrightness: boolean) => {
 
 const Brightness = {
   /**
-   * Sets the screen brightness
-   * Value must be between 0 to 1
+   * Sets the screen brightness.
+   * @param brightness - A value between 0 and 1 representing the brightness level
+   * @param durationMs - Duration in milliseconds for which the brightness transition should occur
    */
   setBrightness,
   /**
-   * Gets the current screen brightness
+   * Gets the current screen brightness.
+   * @returns A promise that resolves the current brightness level (0 to 1)
    */
   getBrightness,
   /**
    * The method is responsible for determining whether the user's original brightness
    * should be restored when the application is minimized
    *
-   * initial value is "true".
+   * @param isNeedRestoreBrightness - If `true`, restores original brightness upon app minimization (initial value is "true")
    * @platform ios
    */
   setIsNeedRestoreBrightness,
