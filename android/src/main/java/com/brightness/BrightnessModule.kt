@@ -22,7 +22,12 @@ class BrightnessModule(reactContext: ReactApplicationContext) : ReactContextBase
                 return@runOnUiThread
             }
 
-            val startBrightness = getBrightness()
+            val startBrightness: Float = if (layoutParams.screenBrightness >= 0) {
+                layoutParams.screenBrightness
+            } else {
+                val resolver = reactApplicationContext.contentResolver
+                Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS) / 255f
+            }
 
             ValueAnimator.ofFloat(startBrightness, brightness).apply {
                 this.duration = duration.toLong()
@@ -36,15 +41,20 @@ class BrightnessModule(reactContext: ReactApplicationContext) : ReactContextBase
     }
 
     @ReactMethod
-    fun getBrightness(): Float {
-        val activity = currentActivity ?: return 0.5f
+    fun getBrightness(promise: Promise) {
+        val activity = currentActivity
+        if (activity == null) {
+            promise.resolve(0.5f) 
+            return
+        }
+
         val layoutParams = activity.window.attributes
 
         return if (layoutParams.screenBrightness >= 0) {
-            layoutParams.screenBrightness
+            promise.resolve(layoutParams.screenBrightness)
         } else {
             val resolver = reactApplicationContext.contentResolver
-            Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS) / 255f
+            promise.resolve(Settings.System.getInt(resolver, Settings.System.SCREEN_BRIGHTNESS) / 255f)
         }
     }
 }
