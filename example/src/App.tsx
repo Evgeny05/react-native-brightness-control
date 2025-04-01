@@ -1,7 +1,6 @@
 import { View, StyleSheet, Button } from 'react-native';
 import { useEffect } from 'react';
 import Brightness from 'react-native-brightness-control';
-Brightness;
 
 export default function App() {
   useEffect(() => {

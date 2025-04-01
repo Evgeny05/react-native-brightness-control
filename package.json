@@ -53,7 +53,10 @@
     "screen-brightness",
     "device-brightness",
     "control-brightness",
-    "brightness"
+    "brightness",
+    "screen",
+    "device",
+    "control"
   ],
   "repository": {
     "type": "git",

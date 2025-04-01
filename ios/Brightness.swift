@@ -59,6 +59,6 @@ class Brightness: NSObject {
   }
   
   deinit {
-    NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIApplication.willResignActiveNotification, object: nil)
   }
 }
